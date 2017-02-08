@@ -38,7 +38,10 @@ def process_path(root, filenames, header_str):
     print("* root = %s" % root)
     for filename in filenames:
         full_path = os.path.join(root, filename)
-        print("** full_path = %s" % full_path)
+        with open(full_path, 'r') as f_in:
+            txt = f_in.read()
+            f_in.close()
+        print("** full_path = %s : %d" % (full_path, len(txt)))
 
 
 if __name__ == '__main__':
