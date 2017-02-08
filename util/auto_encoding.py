@@ -41,7 +41,19 @@ def process_path(root, filenames, header_str):
         with open(full_path, 'r') as f_in:
             txt = f_in.read()
             f_in.close()
+        txt_lines = txt.splitlines()
+
+        # if the first line includes coding, remove it
+        if is_line_encoding(txt_lines[0]):
+            txt_lines.pop(0)
+
         print("** full_path = %s : %d" % (full_path, len(txt)))
+
+
+def is_line_encoding(line):
+    b_first_line_comment = line.startswith('#')
+    b_first_line_has_coding = 'coding' in line
+    return b_first_line_comment and b_first_line_has_coding
 
 
 if __name__ == '__main__':
