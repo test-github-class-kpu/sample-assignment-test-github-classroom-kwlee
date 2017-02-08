@@ -27,14 +27,16 @@ def recursively_add_header(path):
 # 각 행의 자세한 주석을 추가하시오
 '''
     print(header_str)
+    header_list = [line + '\n' for line in header_str.splitlines()]
+
     for root, dirnames, filenames in os.walk(path):
         root_split_path = os.path.split(root)
         # filter path
         if root_split_path[-1].startswith('ch'):
-            process_path(root, filenames, header_str)
+            process_path(root, filenames, header_list)
 
 
-def process_path(root, filenames, header_str):
+def process_path(root, filenames, header_list):
     print("* root = %s" % root)
     for filename in filenames:
         b_rewrite = False
@@ -49,6 +51,9 @@ def process_path(root, filenames, header_str):
         if is_line_encoding(txt_lines[0]):
             txt_lines.pop(0)
             b_rewrite = True
+
+        txt_lines = header_list + txt_lines
+        b_rewrite = True
 
         if b_rewrite:
             print("** full_path = %s : %d -> %d" % (full_path, original_length, len(txt_lines)))
