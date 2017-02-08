@@ -28,10 +28,17 @@ def recursively_add_header(path):
 '''
     print(header_str)
     for root, dirnames, filenames in os.walk(path):
-        print("* root = %s" % root)
-        for filename in filenames:
-            full_path = os.path.join(root, filename)
-            print("** full_path = %s" % full_path)
+        root_split_path = os.path.split(root)
+        # filter path
+        if root_split_path[-1].startswith('ch'):
+            process_path(root, filenames, header_str)
+
+
+def process_path(root, filenames, header_str):
+    print("* root = %s" % root)
+    for filename in filenames:
+        full_path = os.path.join(root, filename)
+        print("** full_path = %s" % full_path)
 
 
 if __name__ == '__main__':
